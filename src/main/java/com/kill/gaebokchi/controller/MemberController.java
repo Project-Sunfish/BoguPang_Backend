@@ -25,7 +25,7 @@ public class MemberController {
         return "Success : jwtTest request";
     }
 
-    @PostMapping("/sign-up")
+    @PostMapping("/api/sign-up")
     public ResponseEntity<?> signUp(@RequestBody UserSignUpDto userSignUpDto, @RequestHeader("Authorization") String authorizationHeader) throws Exception{
         String accessToken = authorizationHeader.substring("Bearer ".length());
         log.info(accessToken);
