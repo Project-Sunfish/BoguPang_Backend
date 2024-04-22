@@ -31,7 +31,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             if(oAuth2User.getRole()== Role.GUEST){
                 String accessToken = jwtTokenProvider.createAccessToken(oAuth2User.getEmail());
                 response.setHeader("Authorization", "Bearer "+accessToken);
-                response.sendRedirect("/sign-up");
+                response.setHeader("Role", "Guest");
             }else{
                 loginSuccess(response, oAuth2User);
             }
@@ -43,7 +43,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private void loginSuccess(HttpServletResponse response, CustomOAuth2User oAuth2User) throws IOException {
         String accessToken = jwtTokenProvider.createAccessToken(oAuth2User.getEmail());
         response.addHeader("Authorization", "Bearer " + accessToken);
-
+        response.addHeader("Role", "User");
         jwtTokenProvider.sendAccessToken(response, accessToken);
     }
 }
