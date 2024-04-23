@@ -13,7 +13,7 @@ spring:
         #        show_sql: true   #write hibernate implementation SQL at System.out
         format_sql: true
   profiles:
-    include: oauth, secretKey
+    include: oauth
 
 logging.level:
   org.hibernate.SQL: debug #write hibernate implementation SQL through logger
