@@ -3,6 +3,8 @@ package com.kill.gaebokchi.domain.user.controller;
 import com.kill.gaebokchi.domain.user.entity.dto.JoinDTO;
 import com.kill.gaebokchi.domain.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +20,9 @@ public class MemberController {
     private final UserDetailsService userDetailsService;
 
     @PostMapping("/join")
-    public String join(@RequestBody JoinDTO joinDTO){
+    public ResponseEntity<?> join(@RequestBody JoinDTO joinDTO){
         memberService.join(joinDTO);
-        return "ok";
+        return new ResponseEntity<>("회원가입이 정상적으로 완료되었습니다", HttpStatus.CREATED);
     }
 
     @PostMapping("/test")
