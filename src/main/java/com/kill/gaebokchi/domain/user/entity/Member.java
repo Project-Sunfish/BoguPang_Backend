@@ -1,21 +1,35 @@
 package com.kill.gaebokchi.domain.user.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.Setter;
+import com.kill.gaebokchi.domain.bogu.entity.DefaultBogu;
+import com.kill.gaebokchi.global.entity.BaseTime;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Setter
 @Getter
-public class Member {
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Table(name="member")
+public class Member extends BaseTime {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name="member_id")
+    private Long id;
 
     private String username;
     private String password;
-
     private String role;
+
+    @OneToMany(mappedBy="host")
+    private final List<DefaultBogu> bogus = new ArrayList<>();
+
+    //==연관관계 메서드==//
+    public void addBogus(DefaultBogu defaultBogu){
+        bogus.add(defaultBogu);
+        defaultBogu.setHost(this);
+    }
 }

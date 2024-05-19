@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
-    private  final MemberRepository memberRepository;
+    private  final MemberService memberService;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member entity = memberRepository.findByUsername(username);
+        Member entity = memberService.findMemberByUsername(username);
         if(entity!=null){
             //userDetails에 담기 -> AuthenticationManger가 이를 검증함
             return new CustomUserDetails(entity);
