@@ -7,8 +7,10 @@ import com.kill.gaebokchi.domain.bogu.repository.DefaultBoguRepository;
 import com.kill.gaebokchi.domain.user.entity.Member;
 import com.kill.gaebokchi.domain.user.repository.MemberRepository;
 import com.kill.gaebokchi.global.error.BadRequestException;
+import com.kill.gaebokchi.global.error.ExceptionCode;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 import static com.kill.gaebokchi.global.error.ExceptionCode.*;
 
 @Service
+@Slf4j
 @Transactional(readOnly=true)
 @RequiredArgsConstructor
 public class DefaultBoguService {

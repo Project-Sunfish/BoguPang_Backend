@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PopBoguResponseDTO {
-    private Boolean liberationFlag;
+public class IdRequestDTO {
+    private Long id;
 }

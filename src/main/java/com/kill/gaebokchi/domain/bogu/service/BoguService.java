@@ -21,9 +21,6 @@ public class BoguService {
         BoguResponseDTO res = new BoguResponseDTO();
         Integer usage = defaultBoguService.findDefaultBoguByHost(member).size();
 
-        if(usage>3){
-            throw new BadRequestException(ExceptionCode.EXCEED_DEFAULT_BOGU_CAPACITY);
-        }
         res.setTodayQuota(3-usage);
         res.setDefaultBogus(defaultBoguService.findDefaultBoguByHost(member));
         res.setEvolvedBogus(evolvedBoguService.findEvolvedBoguByHost(member));

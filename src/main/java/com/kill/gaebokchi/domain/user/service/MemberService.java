@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
+import static com.kill.gaebokchi.global.error.ExceptionCode.NOT_FOUND_MEMBER_ID;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -37,6 +39,6 @@ public class MemberService {
     }
 
     public Member findMemberByUsername(String username){
-        return memberRepository.findByUsername(username).orElseThrow(()-> new BadRequestException(ExceptionCode.NOT_FOUND_MEMBER_ID));
+        return memberRepository.findByUsername(username).orElseThrow(()-> new BadRequestException(NOT_FOUND_MEMBER_ID));
     }
 }
