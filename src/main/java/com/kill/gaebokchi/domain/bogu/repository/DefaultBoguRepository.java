@@ -20,7 +20,7 @@ public interface DefaultBoguRepository extends JpaRepository<DefaultBogu, Long> 
     Optional<DefaultBogu> findById(Long id);
 
     List<DefaultBogu> findByHostAndEvolvedFormNotNull(Member member);
-
+    List<DefaultBogu> findByHostAndEvolvedFormNull(Member member);
     @Query("SELECT COUNT(d) FROM DefaultBogu d WHERE d.host = :member AND d.createdAt >= :startOfDay AND d.createdAt < :endOfDay")
     long countByMemberAndCreatedAtToday(@Param("member") Member member,
                                         @Param("startOfDay") LocalDateTime startOfDay,

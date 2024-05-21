@@ -46,8 +46,8 @@ public class DefaultBoguService {
         return defaultBogu.getId();
     }
 
-    public Integer countDefaultBogu(Member host){
-        List<DefaultBogu> bogus = defaultBoguRepository.findByHost(host);
+    public Integer countDefaultBogu(Member member){
+        List<DefaultBogu> bogus = defaultBoguRepository.findByHost(member);
         return bogus.size();
     }
 
@@ -56,8 +56,8 @@ public class DefaultBoguService {
                 .orElseThrow(() -> new BadRequestException(NOT_FOUND_DEFAULT_BOGU_ID));
     }
 
-    public List<DefaultBoguResponseDTO> findDefaultBoguByHost(Member member){
-        List<DefaultBogu> findLists = defaultBoguRepository.findByHost(member);
+    public List<DefaultBoguResponseDTO> findDefaultBoguByHostAndNotEvolve(Member member){
+        List<DefaultBogu> findLists = defaultBoguRepository.findByHostAndEvolvedFormNull(member);
         return findLists.stream()
                 .map(DefaultBoguResponseDTO::from)
                 .collect(Collectors.toList());
