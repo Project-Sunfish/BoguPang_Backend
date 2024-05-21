@@ -19,10 +19,10 @@ public class BoguService {
 
     public BoguResponseDTO findAllBogus(Member member){
         BoguResponseDTO res = new BoguResponseDTO();
-        Integer usage = defaultBoguService.findDefaultBoguByHost(member).size();
+        Integer usage = defaultBoguService.findDefaultBoguByHostAndNotEvolve(member).size();
 
         res.setTodayQuota(3-usage);
-        res.setDefaultBogus(defaultBoguService.findDefaultBoguByHost(member));
+        res.setDefaultBogus(defaultBoguService.findDefaultBoguByHostAndNotEvolve(member));
         res.setEvolvedBogus(evolvedBoguService.findEvolvedBoguByHost(member));
         return res;
     }
