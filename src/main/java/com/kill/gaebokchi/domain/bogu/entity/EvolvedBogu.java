@@ -36,5 +36,5 @@ public class EvolvedBogu extends BaseTime {
     private Integer status;
     private String problem;
     private Boolean isLiberated;
-    private LocalDateTime liberated_at;
+    private LocalDateTime liberatedAt;
 }

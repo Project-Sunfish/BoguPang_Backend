@@ -23,7 +23,7 @@ public class BoguService {
 
         res.setTodayQuota(3-usage);
         res.setDefaultBogus(defaultBoguService.findDefaultBoguByHostAndNotEvolve(member));
-        res.setEvolvedBogus(evolvedBoguService.findEvolvedBoguByHost(member));
+        res.setEvolvedBogus(evolvedBoguService.findAndUpdateEvolvedBoguByHost(member));
         return res;
     }
 }

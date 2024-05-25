@@ -1,6 +1,8 @@
 package com.kill.gaebokchi.domain.bogu.controller;
 
 import com.kill.gaebokchi.domain.bogu.entity.dto.*;
+import com.kill.gaebokchi.domain.bogu.entity.dto.dogamBogu.CollectedBoguResponseDTO;
+import com.kill.gaebokchi.domain.bogu.entity.dto.dogamBogu.DogamBoguResponseDTO;
 import com.kill.gaebokchi.domain.bogu.service.BoguService;
 import com.kill.gaebokchi.domain.bogu.service.DefaultBoguService;
 import com.kill.gaebokchi.domain.bogu.service.EvolvedBoguService;
@@ -25,7 +27,7 @@ import java.util.Map;
 
 @Controller
 @Slf4j
-@RequestMapping("/api/bogu")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class BoguController {
     private final DefaultBoguService defaultBoguService;
@@ -33,7 +35,7 @@ public class BoguController {
     private final BoguService boguService;
     private final MemberService memberService;
     private final JWTUtil jwtUtil;
-    @PostMapping
+    @PostMapping("/bogu")
     public ResponseEntity<?> createDefaultBogu(HttpServletRequest request){
         String authorization = request.getHeader("Authorization");
         String accessToken = authorization.split(" ")[1];
@@ -47,21 +49,30 @@ public class BoguController {
         return ResponseEntity.ok(res);
 
     }
-    @PostMapping("/evolution")
-    public ResponseEntity<?> createEvolvedBogu(@RequestBody EvolutionRequestDTO evolutionRequestDTO){
-        Long id = evolvedBoguService.saveEvolvedBogu(evolutionRequestDTO);
+    @PostMapping("/bogu/evolution")
+    public ResponseEntity<?> createEvolvedBogu(HttpServletRequest request, @RequestBody EvolutionRequestDTO evolutionRequestDTO){
+        String authorization = request.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+        String username = jwtUtil.getUsername(accessToken);
+        Member member = memberService.findMemberByUsername(username);
+
+        Long id = evolvedBoguService.saveEvolvedBogu(member, evolutionRequestDTO);
         Map<String, Long> res = new HashMap<>();
         res.put("evolvedBoguid", id);
         return ResponseEntity.ok(res);
     }
-    @GetMapping("/{evolvedBoguId}")
-    public ResponseEntity<?> getEvolvedBoguById(@PathVariable("evolvedBoguId") Long id){
+    @GetMapping("/bogu/{evolvedBoguId}")
+    public ResponseEntity<?> getEvolvedBoguById(HttpServletRequest request, @PathVariable("evolvedBoguId") Long id){
+        String authorization = request.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+        String username = jwtUtil.getUsername(accessToken);
+        Member member = memberService.findMemberByUsername(username);
 
-        EvolvedBoguResponseDTO res = evolvedBoguService.findEvolvedBoguByID(id);
+        EvolvedBoguResponseDTO res = evolvedBoguService.findEvolvedBoguByID(member, id);
         return ResponseEntity.ok(res);
 
     }
-    @GetMapping
+    @GetMapping("/bogu")
     public ResponseEntity<?> getBoguList(HttpServletRequest request){
         String authorization = request.getHeader("Authorization");
         String accessToken = authorization.split(" ")[1];
@@ -73,19 +84,51 @@ public class BoguController {
 
     }
 
-    @PostMapping("/pop")
-    public ResponseEntity<?> popBogu(@RequestBody IdRequestDTO req){
 
-        PopBoguResponseDTO res = evolvedBoguService.popEvolvedBogu(req.getId());
+    @PostMapping("/bogu/pop")
+    public ResponseEntity<?> popBogu(HttpServletRequest request, @RequestBody IdRequestDTO req){
+        String authorization = request.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+        String username = jwtUtil.getUsername(accessToken);
+        Member member = memberService.findMemberByUsername(username);
+
+        PopBoguResponseDTO res = evolvedBoguService.popEvolvedBogu(member, req.getId());
         return ResponseEntity.ok(res);
 
     }
 
-    @PostMapping("/liberation")
-    public ResponseEntity<?> liberateBogu(@RequestBody IdRequestDTO req){
+    @PostMapping("/bogu/liberation")
+    public ResponseEntity<?> liberateBogu(HttpServletRequest request, @RequestBody IdRequestDTO req){
+        String authorization = request.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+        String username = jwtUtil.getUsername(accessToken);
+        Member member = memberService.findMemberByUsername(username);
 
-        evolvedBoguService.LiberateEvolvedBogu(req.getId());
+        evolvedBoguService.LiberateEvolvedBogu(member, req.getId());
         return new ResponseEntity<>("해당 복어가 정상적으로 해방되었습니다.", HttpStatus.CREATED);
+
+    }
+
+    @GetMapping("/collection")
+    public ResponseEntity<?> getDogamBoguList(HttpServletRequest request){
+        String authorization = request.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+        String username = jwtUtil.getUsername(accessToken);
+        Member member = memberService.findMemberByUsername(username);
+
+        DogamBoguResponseDTO res = evolvedBoguService.getDogamBogus(member);
+        return ResponseEntity.ok(res);
+    }
+
+    @GetMapping("/collection/{dogamBoguId}")
+    public ResponseEntity<?> getDogamBoguById(HttpServletRequest request, @PathVariable("dogamBoguId") Integer id){
+        String authorization = request.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+        String username = jwtUtil.getUsername(accessToken);
+        Member member = memberService.findMemberByUsername(username);
+
+        CollectedBoguResponseDTO res = evolvedBoguService.findDogamBoguById(member, id);
+        return ResponseEntity.ok(res);
 
     }
 

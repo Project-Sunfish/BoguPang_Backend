@@ -19,12 +19,20 @@ public enum Category {
     CATEGORY8(7, "이유없음"),
     CATEGORY9(8, "기타");
 
-    private final Integer idx;
+    private final Integer id;
     private final String text;
 
     public static Category fromText(String text){
         for(Category category : Category.values()){
             if(StringUtils.equals(category.getText(),text)) {
+                return category;
+            }
+        }
+        throw new BadRequestException(ExceptionCode.NOT_FOUND_CATEGORY);
+    }
+    public static Category fromId(Integer id){
+        for(Category category : Category.values()){
+            if(category.getId()==id) {
                 return category;
             }
         }

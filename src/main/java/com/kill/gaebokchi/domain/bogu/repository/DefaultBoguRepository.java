@@ -17,7 +17,7 @@ import java.util.Optional;
 @Repository
 public interface DefaultBoguRepository extends JpaRepository<DefaultBogu, Long> {
     List<DefaultBogu> findByHost(Member host);
-    Optional<DefaultBogu> findById(Long id);
+    Optional<DefaultBogu> findByHostAndId(Member member, Long id);
 
     List<DefaultBogu> findByHostAndEvolvedFormNotNull(Member member);
     List<DefaultBogu> findByHostAndEvolvedFormNull(Member member);

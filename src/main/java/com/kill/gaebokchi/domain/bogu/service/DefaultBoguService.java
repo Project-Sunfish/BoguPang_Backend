@@ -51,8 +51,8 @@ public class DefaultBoguService {
         return bogus.size();
     }
 
-    public DefaultBogu findDefaultBoguByID(Long id) {
-        return defaultBoguRepository.findById(id)
+    public DefaultBogu findDefaultBoguByID(Member member, Long id) {
+        return defaultBoguRepository.findByHostAndId(member, id)
                 .orElseThrow(() -> new BadRequestException(NOT_FOUND_DEFAULT_BOGU_ID));
     }
 
