@@ -1,6 +1,7 @@
 package com.kill.gaebokchi.domain.bogu.service;
 
 import com.kill.gaebokchi.domain.bogu.entity.dto.BoguResponseDTO;
+import com.kill.gaebokchi.domain.bogu.repository.DefaultBoguRepository;
 import com.kill.gaebokchi.domain.user.entity.Member;
 import com.kill.gaebokchi.global.error.BadRequestException;
 import com.kill.gaebokchi.global.error.ExceptionCode;
@@ -19,7 +20,7 @@ public class BoguService {
 
     public BoguResponseDTO findAllBogus(Member member){
         BoguResponseDTO res = new BoguResponseDTO();
-        Integer usage = defaultBoguService.findDefaultBoguByHostAndNotEvolve(member).size();
+        Integer usage = defaultBoguService.countDefaultBogu(member);
 
         res.setTodayQuota(3-usage);
         res.setDefaultBogus(defaultBoguService.findDefaultBoguByHostAndNotEvolve(member));

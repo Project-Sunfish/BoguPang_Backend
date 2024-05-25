@@ -47,8 +47,10 @@ public class DefaultBoguService {
     }
 
     public Integer countDefaultBogu(Member member){
-        List<DefaultBogu> bogus = defaultBoguRepository.findByHost(member);
-        return bogus.size();
+        LocalDate today = LocalDate.now();
+        LocalDateTime startOfDay = today.atStartOfDay();
+        LocalDateTime endOfDay = today.atTime(LocalTime.MAX);
+        return defaultBoguRepository.countByMemberAndCreatedAtToday(member, startOfDay, endOfDay);
     }
 
     public DefaultBogu findDefaultBoguByID(Member member, Long id) {
