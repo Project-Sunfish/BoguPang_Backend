@@ -2,6 +2,8 @@ package com.kill.gaebokchi.domain.bogu.entity.dto;
 
 import com.kill.gaebokchi.domain.bogu.entity.Category;
 import io.micrometer.common.util.StringUtils;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +15,7 @@ import java.util.Objects;
 public class EvolutionRequestDTO {
     private Long defaultBoguId;
     private List<String> categories;
+    @Size(max=1000)
     private String problem;
 
     public boolean hasNullFields() {

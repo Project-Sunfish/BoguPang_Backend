@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public class EvolvedBoguResponseDTO {
     private Long id;
     private LocalDateTime createdAt;
+    private Boolean isLiberated;
     private Integer level;
     private List<String> categories;
     private String selected_category;
@@ -34,6 +35,7 @@ public class EvolvedBoguResponseDTO {
         return EvolvedBoguResponseDTO.builder()
                 .id(entity.getId())
                 .createdAt(entity.getCreatedAt())
+                .isLiberated(entity.getIsLiberated())
                 .level(entity.getLevel())
                 .categories(categories)
                 .selected_category(entity.getSelectedCategory().getText())

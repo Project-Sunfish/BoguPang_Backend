@@ -34,6 +34,7 @@ public class EvolvedBogu extends BaseTime {
 
     private Integer level;
     private Integer status;
+    @Column(length=1000)
     private String problem;
     private Boolean isLiberated;
     private LocalDateTime liberatedAt;

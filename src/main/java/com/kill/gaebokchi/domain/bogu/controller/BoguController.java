@@ -11,6 +11,7 @@ import com.kill.gaebokchi.domain.user.jwt.JWTUtil;
 import com.kill.gaebokchi.domain.user.repository.MemberRepository;
 import com.kill.gaebokchi.domain.user.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +50,7 @@ public class BoguController {
 
     }
     @PostMapping("/bogu/evolution")
-    public ResponseEntity<?> createEvolvedBogu(HttpServletRequest request, @RequestBody EvolutionRequestDTO evolutionRequestDTO){
+    public ResponseEntity<?> createEvolvedBogu(HttpServletRequest request, @Valid @RequestBody EvolutionRequestDTO evolutionRequestDTO){
         String authorization = request.getHeader("Authorization");
         String accessToken = authorization.split(" ")[1];
         String username = jwtUtil.getUsername(accessToken);
