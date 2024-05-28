@@ -21,6 +21,7 @@ public enum ExceptionCode {
     NEGATIVE_EVOLVED_BOGU_COUNT(3006, "해당 진화복어의 수가 음수입니다."),
     DUPLICATE_LIBERATION(3007, "이미 해방된 복어에 대해 해방을 시도했습니다."),
     DUPLICATE_EVOLUTION(3008, "이미 진화된 기본복어에 대해 진화를 시도했습니다."),
+    POP_TO_ALREADY_LIBERATION(3009, "이미 해방된 복어에 대해 터트리기를 시도했습니다."),
 
     NOT_FOUND_DOGAM_BOGU_ID(4001, "요청한 ID에 해당하는 도감복어가 존재하지 않습니다.");
 

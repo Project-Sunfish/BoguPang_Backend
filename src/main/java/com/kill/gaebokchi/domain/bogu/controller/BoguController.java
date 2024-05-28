@@ -11,6 +11,7 @@ import com.kill.gaebokchi.domain.user.jwt.JWTUtil;
 import com.kill.gaebokchi.domain.user.repository.MemberRepository;
 import com.kill.gaebokchi.domain.user.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
@@ -42,10 +43,8 @@ public class BoguController {
         String username = jwtUtil.getUsername(accessToken);
         Member member = memberService.findMemberByUsername(username);
 
-        Long id = defaultBoguService.saveDefaultBogu(member);
+        DefaultBoguResponseDTO res = defaultBoguService.saveDefaultBogu(member);
 
-        Map<String, Long> res = new HashMap<>();
-        res.put("defaultBoguId", id);
         return ResponseEntity.ok(res);
 
     }
@@ -56,9 +55,7 @@ public class BoguController {
         String username = jwtUtil.getUsername(accessToken);
         Member member = memberService.findMemberByUsername(username);
 
-        Long id = evolvedBoguService.saveEvolvedBogu(member, evolutionRequestDTO);
-        Map<String, Long> res = new HashMap<>();
-        res.put("evolvedBoguid", id);
+        EvolvedBoguResponseDTO res = evolvedBoguService.saveEvolvedBogu(member, evolutionRequestDTO);
         return ResponseEntity.ok(res);
     }
     @GetMapping("/bogu/{evolvedBoguId}")

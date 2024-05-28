@@ -4,6 +4,7 @@ import com.kill.gaebokchi.domain.bogu.entity.Category;
 import com.kill.gaebokchi.domain.bogu.entity.EvolvedBogu;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class EvolvedBoguResponseDTO {
     private Long id;
+    private LocalDateTime createdAt;
     private Integer level;
     private List<String> categories;
     private String selected_category;
@@ -31,6 +33,7 @@ public class EvolvedBoguResponseDTO {
 
         return EvolvedBoguResponseDTO.builder()
                 .id(entity.getId())
+                .createdAt(entity.getCreatedAt())
                 .level(entity.getLevel())
                 .categories(categories)
                 .selected_category(entity.getSelectedCategory().getText())

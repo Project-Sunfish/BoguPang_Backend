@@ -30,20 +30,20 @@ public class DefaultBoguService {
     private final DefaultBoguRepository defaultBoguRepository;
     private final MemberRepository memberRepository;
     @Transactional
-    public Long saveDefaultBogu(Member member){
+    public DefaultBoguResponseDTO saveDefaultBogu(Member member){
         LocalDate today = LocalDate.now();
         LocalDateTime startOfDay = today.atStartOfDay();
         LocalDateTime endOfDay = today.atTime(LocalTime.MAX);
         if(defaultBoguRepository.countByMemberAndCreatedAtToday(member, startOfDay, endOfDay)>=3){
             throw new BadRequestException(EXCEED_DEFAULT_BOGU_CAPACITY);
         }
-        DefaultBogu defaultBogu = new DefaultBogu();
-        defaultBogu.setEvolvedForm(null);
-        member.addBogus(defaultBogu);
+        DefaultBogu entity = new DefaultBogu();
+        entity.setEvolvedForm(null);
+        member.addBogus(entity);
 
         memberRepository.save(member);
-        defaultBoguRepository.save(defaultBogu);
-        return defaultBogu.getId();
+        defaultBoguRepository.save(entity);
+        return DefaultBoguResponseDTO.from(entity);
     }
 
     public Integer countDefaultBogu(Member member){
