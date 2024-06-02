@@ -1,7 +1,9 @@
 package com.kill.gaebokchi.domain.bogu.service;
 
+import com.kill.gaebokchi.domain.bogu.entity.EvolvedBogu;
 import com.kill.gaebokchi.domain.bogu.entity.dto.BoguResponseDTO;
 import com.kill.gaebokchi.domain.bogu.repository.DefaultBoguRepository;
+import com.kill.gaebokchi.domain.bogu.repository.EvolvedBoguRepository;
 import com.kill.gaebokchi.domain.user.entity.Member;
 import com.kill.gaebokchi.global.error.BadRequestException;
 import com.kill.gaebokchi.global.error.ExceptionCode;
@@ -9,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -24,8 +28,7 @@ public class BoguService {
 
         res.setTodayQuota(3-usage);
         res.setDefaultBogus(defaultBoguService.findDefaultBoguByHostAndNotEvolve(member));
-//        evolvedBoguService.findAndUpdateEvolvedBoguByHost(member);
-        res.setEvolvedBogus(evolvedBoguService.findAndUpdateEvolvedBoguByHost(member));
+        res.setEvolvedBogus(evolvedBoguService.findEvolvedBoguByHost(member));
         return res;
     }
 }

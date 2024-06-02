@@ -1,5 +1,6 @@
 package com.kill.gaebokchi.domain.bogu.controller;
 
+import com.kill.gaebokchi.domain.bogu.entity.EvolvedBogu;
 import com.kill.gaebokchi.domain.bogu.entity.dto.*;
 import com.kill.gaebokchi.domain.bogu.entity.dto.dogamBogu.CollectedBoguResponseDTO;
 import com.kill.gaebokchi.domain.bogu.entity.dto.dogamBogu.DogamBoguResponseDTO;
@@ -70,7 +71,7 @@ public class BoguController {
         return ResponseEntity.ok(res);
 
     }
-    @PostMapping("/bogu")
+    @GetMapping("/bogu")
     public ResponseEntity<?> getBoguList(HttpServletRequest request){
         String authorization = request.getHeader("Authorization");
         String accessToken = authorization.split(" ")[1];
@@ -79,6 +80,16 @@ public class BoguController {
 
         BoguResponseDTO res = boguService.findAllBogus(member);
         return ResponseEntity.ok(res);
+    }
+    @PostMapping("/bogu")
+    public ResponseEntity<?> updateBoguList(HttpServletRequest request){
+        String authorization = request.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+        String username = jwtUtil.getUsername(accessToken);
+        Member member = memberService.findMemberByUsername(username);
+
+        evolvedBoguService.updateEvolvedBogu(member);
+        return ResponseEntity.ok("진화 복어의 업데이트가 완료되었습니다.");
     }
 
 
