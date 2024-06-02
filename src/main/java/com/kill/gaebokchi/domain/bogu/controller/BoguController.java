@@ -37,7 +37,7 @@ public class BoguController {
     private final BoguService boguService;
     private final MemberService memberService;
     private final JWTUtil jwtUtil;
-    @PostMapping("/bogu")
+    @PostMapping("/bogu/create")
     public ResponseEntity<?> createDefaultBogu(HttpServletRequest request){
         String authorization = request.getHeader("Authorization");
         String accessToken = authorization.split(" ")[1];
@@ -70,7 +70,7 @@ public class BoguController {
         return ResponseEntity.ok(res);
 
     }
-    @GetMapping("/bogu")
+    @PostMapping("/bogu")
     public ResponseEntity<?> getBoguList(HttpServletRequest request){
         String authorization = request.getHeader("Authorization");
         String accessToken = authorization.split(" ")[1];
@@ -79,7 +79,6 @@ public class BoguController {
 
         BoguResponseDTO res = boguService.findAllBogus(member);
         return ResponseEntity.ok(res);
-
     }
 
 
