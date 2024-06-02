@@ -38,7 +38,7 @@ public class BoguController {
     private final BoguService boguService;
     private final MemberService memberService;
     private final JWTUtil jwtUtil;
-    @PostMapping("/bogu/create")
+    @PostMapping("/bogu/creation")
     public ResponseEntity<?> createDefaultBogu(HttpServletRequest request){
         String authorization = request.getHeader("Authorization");
         String accessToken = authorization.split(" ")[1];
