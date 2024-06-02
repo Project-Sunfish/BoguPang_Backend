@@ -4,6 +4,7 @@ import com.kill.gaebokchi.domain.bogu.entity.Category;
 import com.kill.gaebokchi.domain.bogu.entity.EvolvedBogu;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,24 +13,27 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LiberatedBoguResponseDTO {
-    private Long id;
+public class DetailDogamBoguResponseDTO {
+    private Long evolvedBoguId;
+    private String name;
     private List<String> categories;
     private String problem;
     private LocalDateTime createdAt;
     private LocalDateTime liberatedAt;
 
-    public static LiberatedBoguResponseDTO from(EvolvedBogu entity){
+    public static DetailDogamBoguResponseDTO from(EvolvedBogu entity){
         List<String> categories;
         categories = entity.getCategories().stream()
                 .map(Category::getText)
                 .toList();
-        return LiberatedBoguResponseDTO.builder()
-                .id(entity.getId())
+        return DetailDogamBoguResponseDTO.builder()
+                .evolvedBoguId(entity.getId())
+                .name(entity.getName())
                 .categories(categories)
                 .problem(entity.getProblem())
                 .createdAt(entity.getCreatedAt())
                 .liberatedAt(entity.getLiberatedAt())
                 .build();
     }
+
 }

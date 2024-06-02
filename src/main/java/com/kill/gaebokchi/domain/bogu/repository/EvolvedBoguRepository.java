@@ -19,6 +19,8 @@ public interface EvolvedBoguRepository extends JpaRepository<EvolvedBogu, Long> 
     @Query("SELECT eb FROM EvolvedBogu eb WHERE eb.defaultForm.host = :member AND eb.id = :id")
     Optional<EvolvedBogu> findByHostAndId(@Param("member")Member member, @Param("id") Long id);
 
+    @Query("SELECT eb FROM EvolvedBogu eb WHERE eb.defaultForm.host = :member")
+    List<EvolvedBogu> findByHost(@Param("member")Member member);
     @Query("SELECT eb FROM EvolvedBogu eb WHERE eb.defaultForm.host = :member AND eb.selectedCategory = :selectedCategory")
     List<EvolvedBogu> findByHostAndSelectedCategory(@Param("member") Member member, @Param("selectedCategory") Category selectedCategory);
 
@@ -36,13 +38,8 @@ public interface EvolvedBoguRepository extends JpaRepository<EvolvedBogu, Long> 
             @Param("member") Member member,
             @Param("selectedCategory") Category selectedCategory,
             @Param("createdAt") LocalDateTime createdAt);
-
     @Query("SELECT eb FROM EvolvedBogu eb WHERE eb.defaultForm.host = :member AND eb.isLiberated=false")
     List<EvolvedBogu> findByHostAndIsLiberatedFalse(@Param("member") Member member);
-
-    @Query("SELECT eb FROM EvolvedBogu eb WHERE eb.defaultForm.host = :member AND eb.isLiberated=true")
-    List<EvolvedBogu> findByHostAndIsLiberatedTrue(@Param("member") Member member);
-
     @Query("SELECT eb FROM EvolvedBogu eb WHERE eb.defaultForm.host = :member AND eb.selectedCategory = :category AND eb.variation = :variation")
     List<EvolvedBogu> findByHostAndType(@Param("member") Member member, @Param("category") Category category, @Param("variation") Integer variation);
 }

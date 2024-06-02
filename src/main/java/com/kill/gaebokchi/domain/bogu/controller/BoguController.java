@@ -3,6 +3,7 @@ package com.kill.gaebokchi.domain.bogu.controller;
 import com.kill.gaebokchi.domain.bogu.entity.EvolvedBogu;
 import com.kill.gaebokchi.domain.bogu.entity.dto.*;
 import com.kill.gaebokchi.domain.bogu.entity.dto.dogamBogu.CollectedBoguResponseDTO;
+import com.kill.gaebokchi.domain.bogu.entity.dto.dogamBogu.DetailDogamBoguResponseDTO;
 import com.kill.gaebokchi.domain.bogu.entity.dto.dogamBogu.DogamBoguResponseDTO;
 import com.kill.gaebokchi.domain.bogu.service.BoguService;
 import com.kill.gaebokchi.domain.bogu.service.DefaultBoguService;
@@ -128,16 +129,17 @@ public class BoguController {
         return ResponseEntity.ok(res);
     }
 
-    @GetMapping("/collection/{dogamBoguId}")
-    public ResponseEntity<?> getDogamBoguById(HttpServletRequest request, @PathVariable("dogamBoguId") Integer id){
+    @GetMapping("/collection/{typeId}")
+    public ResponseEntity<?> getDogamBoguById(HttpServletRequest request, @PathVariable("typeId") Integer id){
         String authorization = request.getHeader("Authorization");
         String accessToken = authorization.split(" ")[1];
         String username = jwtUtil.getUsername(accessToken);
         Member member = memberService.findMemberByUsername(username);
 
-        CollectedBoguResponseDTO res = evolvedBoguService.findDogamBoguById(member, id);
+        List<DetailDogamBoguResponseDTO> res = evolvedBoguService.findDogamBoguById(member, id);
         return ResponseEntity.ok(res);
 
     }
+
 
 }

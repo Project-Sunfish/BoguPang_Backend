@@ -8,6 +8,6 @@ import java.util.List;
 @Getter
 @Setter
 public class DogamBoguResponseDTO {
-    private Integer countKinds;
-    private List<CollectedBoguResponseDTO> collectedBogus;
+    Integer countKinds;
+    List<CollectedBoguResponseDTO> collectedBogus;
 }
