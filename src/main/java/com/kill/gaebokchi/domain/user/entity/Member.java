@@ -27,9 +27,17 @@ public class Member extends BaseTime {
     @OneToMany(mappedBy="host")
     private final List<DefaultBogu> bogus = new ArrayList<>();
 
+    @OneToOne
+    @JoinColumn(name="typeFlag_id")
+    private TypeFlag typeFlag;
     //==연관관계 메서드==//
     public void addBogus(DefaultBogu defaultBogu){
         bogus.add(defaultBogu);
         defaultBogu.setHost(this);
+    }
+
+    public void setFlag(TypeFlag setTypeFlag){
+        typeFlag=setTypeFlag;
+        setTypeFlag.setMember(this);
     }
 }

@@ -141,5 +141,17 @@ public class BoguController {
 
     }
 
+    @PostMapping("/deleteNew")
+    public ResponseEntity<?> deleteCreatedFlag(HttpServletRequest request, @RequestBody IdRequestDTO req){
+        String authorization = request.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+        String username = jwtUtil.getUsername(accessToken);
+        Member member = memberService.findMemberByUsername(username);
+
+        evolvedBoguService.deleteNewFlag(member, (int)req.getId().longValue());
+        return ResponseEntity.ok("해당 타입의 new가 정상적으로 삭제되었습니다.");
+    }
+
+
 
 }

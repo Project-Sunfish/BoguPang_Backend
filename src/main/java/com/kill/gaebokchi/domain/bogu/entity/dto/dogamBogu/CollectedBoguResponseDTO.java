@@ -17,13 +17,12 @@ import java.util.List;
 public class CollectedBoguResponseDTO {
     Integer typeId;
     Boolean newFlag;
+    Boolean liberatedFlag;
     String name;
 
-    public static CollectedBoguResponseDTO from(Integer category, Integer variation){
-        Type type = Type.getTypeFromCategoryAndVariation(category,variation);
+    public static CollectedBoguResponseDTO from(Type type){
         return CollectedBoguResponseDTO.builder()
                 .typeId(type.getId())
-                .newFlag(type.getNewFlag())
                 .name(type.getName())
                 .build();
     }

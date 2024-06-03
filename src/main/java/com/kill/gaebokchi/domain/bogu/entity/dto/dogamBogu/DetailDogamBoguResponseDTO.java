@@ -28,7 +28,7 @@ public class DetailDogamBoguResponseDTO {
                 .toList();
         return DetailDogamBoguResponseDTO.builder()
                 .evolvedBoguId(entity.getId())
-                .name(entity.getName())
+                .name(entity.getType().getName())
                 .categories(categories)
                 .problem(entity.getProblem())
                 .createdAt(entity.getCreatedAt())

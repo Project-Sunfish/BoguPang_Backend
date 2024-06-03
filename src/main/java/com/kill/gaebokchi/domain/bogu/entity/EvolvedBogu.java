@@ -25,8 +25,8 @@ public class EvolvedBogu extends BaseTime {
     @ElementCollection
     List<Category> categories;
     Category selectedCategory;
-    private Integer variation;
-    private String name;
+    @Enumerated(EnumType.STRING)
+    Type type;
 
     private Integer countBang;
     private Integer count;

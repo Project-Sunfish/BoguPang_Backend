@@ -19,7 +19,7 @@ public class EvolvedBoguResponseDTO {
     private Boolean isLiberated;
     private Integer level;
     private List<String> categories;
-    private String selected_category;
+    private String selectedCategory;
     private Integer variation;
     private String name;
     private Integer status;
@@ -31,16 +31,15 @@ public class EvolvedBoguResponseDTO {
         categories = entity.getCategories().stream()
                     .map(Category::getText)
                     .toList();
-
         return EvolvedBoguResponseDTO.builder()
                 .id(entity.getId())
                 .createdAt(entity.getCreatedAt())
                 .isLiberated(entity.getIsLiberated())
                 .level(entity.getLevel())
                 .categories(categories)
-                .selected_category(entity.getSelectedCategory().getText())
-                .variation(entity.getVariation())
-                .name(entity.getName())
+                .selectedCategory(entity.getSelectedCategory().getText())
+                .variation(entity.getType().getVariation())
+                .name(entity.getType().getName())
                 .status(entity.getStatus())
                 .count(entity.getCount())
                 .problem(entity.getProblem())

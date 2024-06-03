@@ -22,7 +22,7 @@ public class DefaultBogu extends BaseTime {
     private Member host;
 
     @OneToOne
-    @JoinColumn(name="evolvedForm")
+    @JoinColumn(name="evolvedBogu_id")
     private EvolvedBogu evolvedForm;
 
     //==연관관계 메서드==//
