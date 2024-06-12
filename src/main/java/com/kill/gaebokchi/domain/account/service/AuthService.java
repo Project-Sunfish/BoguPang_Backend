@@ -69,6 +69,9 @@ public class AuthService {
         if(request.hasNullFields()){
             throw new BadRequestException(INVALID_SIGNUP_FORM);
         }
+        if(member.getRole()==Role.ROLE_USER){
+            throw new BadRequestException(ALREADY_SIGNUP_MEMBER);
+        }
         member.setBirth(request.getBirth());
         member.setName(request.getName());
         member.setGender(request.getGender());
