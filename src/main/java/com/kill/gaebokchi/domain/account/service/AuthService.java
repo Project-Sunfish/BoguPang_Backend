@@ -1,13 +1,10 @@
 package com.kill.gaebokchi.domain.account.service;
 
-import com.kill.gaebokchi.domain.account.dto.LoginResponseDTO;
-import com.kill.gaebokchi.domain.account.dto.OAuthResponse;
-import com.kill.gaebokchi.domain.account.dto.SignUpRequestDTO;
+import com.kill.gaebokchi.domain.account.dto.*;
 import com.kill.gaebokchi.domain.account.infra.google.GoogleApiClient;
 import com.kill.gaebokchi.domain.account.infra.kakao.KakaoApiClient;
 import com.kill.gaebokchi.domain.account.infra.naver.NaverApiClient;
 import com.kill.gaebokchi.domain.account.jwt.JWTProvider;
-import com.kill.gaebokchi.domain.account.dto.LoginRequestDTO;
 import com.kill.gaebokchi.domain.account.entity.Member;
 import com.kill.gaebokchi.domain.account.entity.Role;
 import com.kill.gaebokchi.domain.account.entity.TypeFlag;
@@ -77,6 +74,10 @@ public class AuthService {
         member.setGender(request.getGender());
         member.setRole(Role.ROLE_USER);
         return jwtProvider.signup(member);
+    }
+    @Transactional
+    public LoginResponseDTO reissue(ReissueRequestDTO request){
+        return jwtProvider.reissue(request.getRefreshToken());
     }
 
 }

@@ -2,6 +2,7 @@ package com.kill.gaebokchi.domain.account.controller;
 
 import com.kill.gaebokchi.domain.account.dto.LoginRequestDTO;
 import com.kill.gaebokchi.domain.account.dto.LoginResponseDTO;
+import com.kill.gaebokchi.domain.account.dto.ReissueRequestDTO;
 import com.kill.gaebokchi.domain.account.dto.SignUpRequestDTO;
 import com.kill.gaebokchi.domain.account.entity.Member;
 import com.kill.gaebokchi.domain.account.security.CustomUserDetails;
@@ -32,6 +33,12 @@ public class AuthController {
         String email = customUserDetails.getUsername();
         Member member = memberService.findMemberByEmail(email);
         LoginResponseDTO response = authService.signUp(member, signUpRequestDTO);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/reissue")
+    public ResponseEntity<?> reissue(@RequestBody ReissueRequestDTO reissueRequestDTO){
+        LoginResponseDTO response = authService.reissue(reissueRequestDTO);
         return ResponseEntity.ok(response);
     }
 }
