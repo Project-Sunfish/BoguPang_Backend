@@ -3,9 +3,7 @@ package com.kill.gaebokchi.domain.bogu.repository;
 import com.kill.gaebokchi.domain.bogu.entity.Category;
 import com.kill.gaebokchi.domain.bogu.entity.EvolvedBogu;
 import com.kill.gaebokchi.domain.bogu.entity.Type;
-import com.kill.gaebokchi.domain.user.entity.Member;
-import org.springframework.boot.autoconfigure.cache.CacheType;
-import org.springframework.cglib.core.Local;
+import com.kill.gaebokchi.domain.account.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -36,7 +34,10 @@ public interface EvolvedBoguRepository extends JpaRepository<EvolvedBogu, Long> 
             @Param("member") Member member,
             @Param("selectedCategory") Category selectedCategory,
             @Param("createdAt") LocalDateTime createdAt);
-    @Query("SELECT eb FROM EvolvedBogu eb WHERE eb.defaultForm.host = :member AND eb.isLiberated=false")
+    @Query("SELECT eb FROM EvolvedBogu eb WHERE eb.defaultForm.host = :member AND eb.count >= 1")
+    List<EvolvedBogu> findByHostAndNonZeroCount(@Param("member") Member member);
+
+    @Query("SELECT eb FROM EvolvedBogu eb WHERE eb.defaultForm.host = :member AND eb.isLiberated = false")
     List<EvolvedBogu> findByHostAndIsLiberatedFalse(@Param("member") Member member);
 
 }

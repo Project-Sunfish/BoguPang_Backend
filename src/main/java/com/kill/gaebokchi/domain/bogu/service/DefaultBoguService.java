@@ -1,14 +1,11 @@
 package com.kill.gaebokchi.domain.bogu.service;
 
 import com.kill.gaebokchi.domain.bogu.entity.DefaultBogu;
-import com.kill.gaebokchi.domain.bogu.entity.EvolvedBogu;
-import com.kill.gaebokchi.domain.bogu.entity.dto.DefaultBoguResponseDTO;
+import com.kill.gaebokchi.domain.bogu.dto.response.DefaultBoguResponseDTO;
 import com.kill.gaebokchi.domain.bogu.repository.DefaultBoguRepository;
-import com.kill.gaebokchi.domain.user.entity.Member;
-import com.kill.gaebokchi.domain.user.repository.MemberRepository;
+import com.kill.gaebokchi.domain.account.entity.Member;
+import com.kill.gaebokchi.domain.account.repository.MemberRepository;
 import com.kill.gaebokchi.global.error.BadRequestException;
-import com.kill.gaebokchi.global.error.ExceptionCode;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.kill.gaebokchi.domain.bogu.entity;
 
-import com.kill.gaebokchi.domain.user.entity.Member;
+import com.kill.gaebokchi.domain.account.entity.Member;
 import com.kill.gaebokchi.global.entity.BaseTime;
 import jakarta.persistence.*;
 import lombok.*;
