@@ -19,6 +19,10 @@ public enum ExceptionCode {
 
     NOT_FOUND_MEMBER_ID(1001, "요청한 ID에 해당하는 회원이 존재하지 않습니다."),
     NOT_FOUND_MEMBER_EMAIL(1002, "요청한 email에 해당하는 회원이 존재하지 않습니다."),
+    INVALID_LOGIN_FORM(1003, "요청한 로그인 형식이 올바르지 않습니다."),
+    INVALID_SOCIAL_TYPE(1004, "요청한 소셜 타입명이 잘못되었습니다."),
+    INVALID_SIGNUP_FORM(1005, "요청한 회원가입 형식이 올바르지 않습니다."),
+
 
     NOT_FOUND_DEFAULT_BOGU_ID(2001, "요청한 ID에 해당하는 기본복어가 존재하지 않습니다."),
     EXCEED_DEFAULT_BOGU_CAPACITY(2002, "오늘 생성 가능한 기본복어 수를 초과했습니다."),
@@ -33,10 +37,7 @@ public enum ExceptionCode {
     DUPLICATE_EVOLUTION(3008, "이미 진화된 기본복어에 대해 진화를 시도했습니다."),
     POP_TO_ALREADY_LIBERATION(3009, "이미 해방된 복어에 대해 터트리기를 시도했습니다."),
 
-    NOT_FOUND_DOGAM_BOGU_ID(4001, "요청한 ID에 해당하는 도감복어가 존재하지 않습니다."),
-
-    INVALID_SOCIAL_TYPE(5001, "요청한 소셜 타입명이 잘못되었습니다.");
-
+    NOT_FOUND_DOGAM_BOGU_ID(4001, "요청한 ID에 해당하는 도감복어가 존재하지 않습니다.");
 
     private final int code;
     private final String message;

@@ -18,8 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.kill.gaebokchi.global.error.ExceptionCode.INVALID_SOCIAL_TYPE;
-import static com.kill.gaebokchi.global.error.ExceptionCode.NOT_FOUND_MEMBER_EMAIL;
+import static com.kill.gaebokchi.global.error.ExceptionCode.*;
 
 @Service
 @Slf4j
@@ -34,6 +33,9 @@ public class AuthService {
     private final GoogleApiClient googleApiClient;
     @Transactional
     public LoginResponseDTO login(LoginRequestDTO request){
+        if(request.hasNullFields()){
+            throw new BadRequestException(INVALID_LOGIN_FORM);
+        }
         String socialType = request.getSocialType();
         OAuthResponse response;
         if(socialType.equalsIgnoreCase("Kakao")){
@@ -64,6 +66,9 @@ public class AuthService {
     }
     @Transactional
     public LoginResponseDTO signUp(Member member, SignUpRequestDTO request){
+        if(request.hasNullFields()){
+            throw new BadRequestException(INVALID_SIGNUP_FORM);
+        }
         member.setBirth(request.getBirth());
         member.setName(request.getName());
         member.setGender(request.getGender());

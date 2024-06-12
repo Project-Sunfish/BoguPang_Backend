@@ -1,7 +1,9 @@
 package com.kill.gaebokchi.domain.account.dto;
 
 import com.kill.gaebokchi.domain.account.infra.SocialType;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
 @Getter
 @Builder
