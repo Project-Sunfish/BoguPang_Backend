@@ -33,7 +33,7 @@ public class GoogleApiClient implements OAuthApiClient {
 
         return OAuthResponse.builder()
                 .socialType(SocialType.GOOGLE)
-                .email(response.getBody().get("id") + "@GOOGLE")
+                .email(response.getBody().get("sub") + "@GOOGLE")
                 .build();
     }
 }
