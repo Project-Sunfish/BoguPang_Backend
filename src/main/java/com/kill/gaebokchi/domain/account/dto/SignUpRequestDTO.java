@@ -12,11 +12,12 @@ import java.util.Objects;
 @Setter
 public class SignUpRequestDTO {
     String name;
+    String birthType;
     LocalDate birth;
     String gender;
     public boolean hasNullFields() {
         // name, birth, gender가 null인지 또는 name이나 gender가 빈 문자열인지 확인
-        if (Objects.isNull(name) || Objects.isNull(birth) || Objects.isNull(gender) || StringUtils.isEmpty(name) || StringUtils.isEmpty(gender)) {
+        if (Objects.isNull(name) || Objects.isNull(birthType) || Objects.isNull(birth) || Objects.isNull(gender) || StringUtils.isEmpty(name) || StringUtils.isEmpty(birthType) || StringUtils.isEmpty(gender)) {
             return true;
         }
 

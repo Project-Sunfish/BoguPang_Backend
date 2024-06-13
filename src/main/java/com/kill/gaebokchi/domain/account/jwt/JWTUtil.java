@@ -79,13 +79,13 @@ public class JWTUtil {
                     .parseClaimsJws(token); //토큰의 유효 기간을 확인하기 위해 exp claim을 가져와 현재와 비교
             return true;
         } catch (SecurityException | MalformedJwtException e) {
-            log.warn("잘못된 JWT 서명입니다.");
+            log.warn("Wrong JWT sign");
         } catch (ExpiredJwtException e) {
-            log.warn("만료된 JWT 입니다.");
+            log.warn("Expired JWT");
         } catch (UnsupportedJwtException e) {
-            log.warn("지원되지 않는 JWT입니다.");
+            log.warn("Unsupported JWT");
         } catch (IllegalArgumentException e) {
-            log.warn("JWT 잘못 되었습니다.");
+            log.warn("Wrong JWT");
         }
         return false;
     }

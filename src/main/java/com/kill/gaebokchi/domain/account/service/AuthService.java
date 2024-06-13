@@ -69,6 +69,7 @@ public class AuthService {
         if(member.getRole()==Role.ROLE_USER){
             throw new BadRequestException(ALREADY_SIGNUP_MEMBER);
         }
+        member.setBirthType(request.getBirthType());
         member.setBirth(request.getBirth());
         member.setName(request.getName());
         member.setGender(request.getGender());

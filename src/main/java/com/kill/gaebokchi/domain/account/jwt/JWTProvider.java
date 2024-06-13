@@ -35,6 +35,7 @@ public class JWTProvider {
         return LoginResponseDTO.of(accessToken, refreshToken, member.getRole().toString());
     }
     public LoginResponseDTO reissue(String refreshToken){
+        log.info("refresh Token : "+refreshToken);
         String category = jwtUtil.getCategory(refreshToken);
         if(!category.equals("refresh")){
             throw new BadRequestException(IS_NOT_REFRESHTOKEN);

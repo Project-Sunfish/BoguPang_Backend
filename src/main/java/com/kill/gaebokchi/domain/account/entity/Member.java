@@ -31,6 +31,7 @@ public class Member extends BaseTime {
 
     //information
     private String name;
+    private String birthType;
     private LocalDate birth;
     private String gender;
 
