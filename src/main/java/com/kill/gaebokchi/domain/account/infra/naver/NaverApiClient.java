@@ -1,6 +1,6 @@
 package com.kill.gaebokchi.domain.account.infra.naver;
 
-import com.kill.gaebokchi.domain.account.dto.OAuthResponse;
+import com.kill.gaebokchi.domain.account.dto.response.OAuthResponse;
 import com.kill.gaebokchi.domain.account.infra.OAuthApiClient;
 import com.kill.gaebokchi.domain.account.infra.SocialType;
 import lombok.RequiredArgsConstructor;

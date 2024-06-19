@@ -1,14 +1,11 @@
 package com.kill.gaebokchi.domain.account.controller;
 
-import com.kill.gaebokchi.domain.account.dto.MemberResponseDTO;
-import com.kill.gaebokchi.domain.account.dto.SignUpRequestDTO;
-import com.kill.gaebokchi.domain.account.dto.TokenResponseDTO;
+import com.kill.gaebokchi.domain.account.dto.response.MemberResponseDTO;
+import com.kill.gaebokchi.domain.account.dto.request.SignUpRequestDTO;
 import com.kill.gaebokchi.domain.account.entity.Member;
 import com.kill.gaebokchi.domain.account.security.CustomUserDetails;
 import com.kill.gaebokchi.domain.account.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

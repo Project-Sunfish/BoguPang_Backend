@@ -1,14 +1,11 @@
 package com.kill.gaebokchi.domain.account.service;
 
-import com.kill.gaebokchi.domain.account.dto.MemberResponseDTO;
-import com.kill.gaebokchi.domain.account.dto.SignUpRequestDTO;
+import com.kill.gaebokchi.domain.account.dto.request.SignUpRequestDTO;
 import com.kill.gaebokchi.domain.account.entity.Member;
 import com.kill.gaebokchi.domain.account.repository.MemberRepository;
-import com.kill.gaebokchi.domain.account.repository.TypeFlagRepository;
 import com.kill.gaebokchi.global.error.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

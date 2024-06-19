@@ -19,7 +19,7 @@ public class TypeFlagService {
     @Transactional
     public TypeFlag createFlag(){
         TypeFlag typeFlag = new TypeFlag();
-        List<Boolean> flag = new ArrayList<>(Collections.nCopies(22, false));
+        List<Boolean> flag = new ArrayList<>(Collections.nCopies(23, false));
         typeFlag.setNewFlag(flag);
         typeFlag.setLiberatedFlag(flag);
         typeFlagRepository.save(typeFlag);

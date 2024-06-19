@@ -1,4 +1,4 @@
-package com.kill.gaebokchi.domain.account.dto;
+package com.kill.gaebokchi.domain.account.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;

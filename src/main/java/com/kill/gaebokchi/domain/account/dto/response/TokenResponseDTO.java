@@ -1,4 +1,4 @@
-package com.kill.gaebokchi.domain.account.dto;
+package com.kill.gaebokchi.domain.account.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

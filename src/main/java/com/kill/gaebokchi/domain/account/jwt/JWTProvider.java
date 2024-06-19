@@ -1,9 +1,8 @@
 package com.kill.gaebokchi.domain.account.jwt;
 
-import com.kill.gaebokchi.domain.account.dto.LoginResponseDTO;
-import com.kill.gaebokchi.domain.account.dto.TokenResponseDTO;
+import com.kill.gaebokchi.domain.account.dto.response.LoginResponseDTO;
+import com.kill.gaebokchi.domain.account.dto.response.TokenResponseDTO;
 import com.kill.gaebokchi.domain.account.entity.Member;
-import com.kill.gaebokchi.domain.account.service.MemberService;
 import com.kill.gaebokchi.global.error.BadRequestException;
 //import com.kill.gaebokchi.global.redis.RedisService;
 import com.kill.gaebokchi.global.redis.RedisService;

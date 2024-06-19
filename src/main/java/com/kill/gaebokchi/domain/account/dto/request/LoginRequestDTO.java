@@ -1,4 +1,4 @@
-package com.kill.gaebokchi.domain.account.dto;
+package com.kill.gaebokchi.domain.account.dto.request;
 
 import io.micrometer.common.util.StringUtils;
 import lombok.Getter;
