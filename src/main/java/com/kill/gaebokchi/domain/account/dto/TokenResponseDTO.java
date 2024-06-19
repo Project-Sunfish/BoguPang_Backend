@@ -9,18 +9,14 @@ import lombok.Setter;
 @Setter
 @Builder
 @AllArgsConstructor
-public class LoginResponseDTO {
+public class TokenResponseDTO {
     String accessToken;
     String refreshToken;
-    Boolean tutorialFlag;
-    String role;
 
-    public static LoginResponseDTO of(String aT, String rT, Boolean tutorial, String role){
-        return LoginResponseDTO.builder()
+    public static TokenResponseDTO of(String aT, String rT){
+        return TokenResponseDTO.builder()
                 .accessToken(aT)
                 .refreshToken(rT)
-                .tutorialFlag(tutorial)
-                .role(role)
                 .build();
     }
 }

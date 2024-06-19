@@ -20,7 +20,7 @@ public enum Type {
     TYPE8(7, 2, 2, "딸 복어"),
     TYPE9(8, 2, 3, "아빠 복어"),
     TYPE10(9, 3, 0, "아싸 복어"),
-    TYPE11(10, 3, 1, "연극 복어"),
+    TYPE11(10, 3, 1, "마스크 복어"),
     TYPE12(11, 3, 2, "혼밥 복어"),
     TYPE13(12, 4, 0, "나홀로 복어"),
     TYPE14(13, 4, 1, "커플 복어"),
@@ -31,7 +31,8 @@ public enum Type {
     TYPE19(18, 7, 0, "고뇌 복어"),
     TYPE20(19, 7, 1, "사색 복어"),
     TYPE21(20, 8, 0, "화난 복어"),
-    TYPE22(21, 8, 1, "눈물 복어");
+    TYPE22(21, 8, 1, "눈물 복어"),
+    TYPE23(22, 8, 2, "질색 복어");
 
     private final Integer id;
     private final Integer category;

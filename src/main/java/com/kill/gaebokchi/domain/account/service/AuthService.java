@@ -55,6 +55,7 @@ public class AuthService {
                 .email(response.getEmail())
                 .role(Role.ROLE_GUEST)
                 .socialType(response.getSocialType())
+                .tutorial(false)
                 .build();
         TypeFlag typeFlag = typeFlagService.createFlag();
         member.setFlag(typeFlag);
@@ -77,7 +78,7 @@ public class AuthService {
         return jwtProvider.signup(member);
     }
     @Transactional
-    public LoginResponseDTO reissue(ReissueRequestDTO request){
+    public TokenResponseDTO reissue(ReissueRequestDTO request){
         return jwtProvider.reissue(request.getRefreshToken());
     }
 

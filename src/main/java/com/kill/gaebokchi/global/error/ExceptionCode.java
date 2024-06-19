@@ -23,6 +23,7 @@ public enum ExceptionCode {
     INVALID_SOCIAL_TYPE(1004, "요청한 소셜 타입명이 잘못되었습니다."),
     INVALID_SIGNUP_FORM(1005, "요청한 회원가입 형식이 올바르지 않습니다."),
     ALREADY_SIGNUP_MEMBER(1006, "이미 ROLE_USER 권한을 가진 회원입니다."),
+    ALREADY_COMPLETE_TUTORIAL(1007, "이미 튜토리얼을 완료한 유저입니다."),
 
 
     NOT_FOUND_DEFAULT_BOGU_ID(2001, "요청한 ID에 해당하는 기본복어가 존재하지 않습니다."),

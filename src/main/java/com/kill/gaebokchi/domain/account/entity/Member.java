@@ -23,7 +23,6 @@ public class Member extends BaseTime {
     private Long id;
 
     private String email;
-    private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
     @Enumerated(EnumType.STRING)
@@ -34,6 +33,9 @@ public class Member extends BaseTime {
     private String birthType;
     private LocalDate birth;
     private String gender;
+
+    //flag
+    private Boolean tutorial;
 
     //token
     private String refreshToken;

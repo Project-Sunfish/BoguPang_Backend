@@ -1,9 +1,6 @@
 package com.kill.gaebokchi.domain.account.controller;
 
-import com.kill.gaebokchi.domain.account.dto.LoginRequestDTO;
-import com.kill.gaebokchi.domain.account.dto.LoginResponseDTO;
-import com.kill.gaebokchi.domain.account.dto.ReissueRequestDTO;
-import com.kill.gaebokchi.domain.account.dto.SignUpRequestDTO;
+import com.kill.gaebokchi.domain.account.dto.*;
 import com.kill.gaebokchi.domain.account.entity.Member;
 import com.kill.gaebokchi.domain.account.security.CustomUserDetails;
 import com.kill.gaebokchi.domain.account.service.AuthService;
@@ -38,7 +35,7 @@ public class AuthController {
 
     @PostMapping("/reissue")
     public ResponseEntity<?> reissue(@RequestBody ReissueRequestDTO reissueRequestDTO){
-        LoginResponseDTO response = authService.reissue(reissueRequestDTO);
+        TokenResponseDTO response = authService.reissue(reissueRequestDTO);
         return ResponseEntity.ok(response);
     }
 }

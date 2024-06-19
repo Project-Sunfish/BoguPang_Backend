@@ -1,5 +1,7 @@
 package com.kill.gaebokchi.domain.account.service;
 
+import com.kill.gaebokchi.domain.account.dto.MemberResponseDTO;
+import com.kill.gaebokchi.domain.account.dto.SignUpRequestDTO;
 import com.kill.gaebokchi.domain.account.entity.Member;
 import com.kill.gaebokchi.domain.account.repository.MemberRepository;
 import com.kill.gaebokchi.domain.account.repository.TypeFlagRepository;
@@ -10,7 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.kill.gaebokchi.global.error.ExceptionCode.NOT_FOUND_MEMBER_EMAIL;
+import static com.kill.gaebokchi.global.error.ExceptionCode.*;
 
 @Service
 @Slf4j
@@ -18,12 +20,31 @@ import static com.kill.gaebokchi.global.error.ExceptionCode.NOT_FOUND_MEMBER_EMA
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
-    private final TypeFlagRepository typeFlagRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
 
     public Member findMemberByEmail(String email){
         return memberRepository.findByEmail(email).orElseThrow(()-> new BadRequestException(NOT_FOUND_MEMBER_EMAIL));
     }
 
+    @Transactional
+    public void updateMember(Member member, SignUpRequestDTO request){
+        if(request.hasNullFields()){
+            throw new BadRequestException(INVALID_SIGNUP_FORM);
+        }
+        member.setName(request.getName());
+        member.setGender(request.getGender());
+        member.setBirthType(request.getBirthType());
+        member.setBirth(request.getBirth());
+    }
+    @Transactional
+    public void deleteMember(Member member){
+        memberRepository.delete(member);
+    }
+
+    @Transactional
+    public void toggleTutorialFlag(Member member){
+        if(member.getTutorial()){
+            throw new BadRequestException(ALREADY_COMPLETE_TUTORIAL);
+        }
+        member.setTutorial(true);
+    }
 }
