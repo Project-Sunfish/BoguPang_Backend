@@ -3,9 +3,8 @@ package com.kill.gaebokchi.domain.account.service;
 import com.kill.gaebokchi.domain.account.dto.request.LoginRequestDTO;
 import com.kill.gaebokchi.domain.account.dto.request.ReissueRequestDTO;
 import com.kill.gaebokchi.domain.account.dto.request.SignUpRequestDTO;
-import com.kill.gaebokchi.domain.account.dto.response.LoginResponseDTO;
-import com.kill.gaebokchi.domain.account.dto.response.OAuthResponse;
 import com.kill.gaebokchi.domain.account.dto.response.TokenResponseDTO;
+import com.kill.gaebokchi.domain.account.dto.response.OAuthResponse;
 import com.kill.gaebokchi.domain.account.infra.google.GoogleApiClient;
 import com.kill.gaebokchi.domain.account.infra.kakao.KakaoApiClient;
 import com.kill.gaebokchi.domain.account.infra.naver.NaverApiClient;
@@ -17,8 +16,6 @@ import com.kill.gaebokchi.domain.account.repository.MemberRepository;
 import com.kill.gaebokchi.global.error.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.Cache;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +33,7 @@ public class AuthService {
     private final NaverApiClient naverApiClient;
     private final GoogleApiClient googleApiClient;
     @Transactional
-    public LoginResponseDTO login(LoginRequestDTO request){
+    public TokenResponseDTO login(LoginRequestDTO request){
         if(request.hasNullFields()){
             throw new BadRequestException(INVALID_LOGIN_FORM);
         }
@@ -70,7 +67,7 @@ public class AuthService {
         return member;
     }
     @Transactional
-    public LoginResponseDTO signUp(Member member, SignUpRequestDTO request){
+    public TokenResponseDTO signUp(Member member, SignUpRequestDTO request){
         if(request.hasNullFields()){
             throw new BadRequestException(INVALID_SIGNUP_FORM);
         }

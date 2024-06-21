@@ -12,11 +12,15 @@ import lombok.Setter;
 public class TokenResponseDTO {
     String accessToken;
     String refreshToken;
+    Boolean tutorialFlag;
+    String role;
 
-    public static TokenResponseDTO of(String aT, String rT){
+    public static TokenResponseDTO of(String aT, String rT, Boolean tutorial, String role){
         return TokenResponseDTO.builder()
                 .accessToken(aT)
                 .refreshToken(rT)
+                .tutorialFlag(tutorial)
+                .role(role)
                 .build();
     }
 }

@@ -1,8 +1,8 @@
 package com.kill.gaebokchi.domain.account.jwt;
 
-import com.kill.gaebokchi.domain.account.dto.response.LoginResponseDTO;
 import com.kill.gaebokchi.domain.account.dto.response.TokenResponseDTO;
 import com.kill.gaebokchi.domain.account.entity.Member;
+import com.kill.gaebokchi.domain.account.service.MemberService;
 import com.kill.gaebokchi.global.error.BadRequestException;
 //import com.kill.gaebokchi.global.redis.RedisService;
 import com.kill.gaebokchi.global.redis.RedisService;
@@ -20,17 +20,18 @@ import static com.kill.gaebokchi.global.error.ExceptionCode.IS_NOT_REFRESHTOKEN;
 @RequiredArgsConstructor
 public class JWTProvider {
     private final JWTUtil jwtUtil;
+    private final MemberService memberService;
     private final RedisService redisService;
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;            // 30분
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  // 7일
-    public LoginResponseDTO createJWT(Member member){
+    public TokenResponseDTO createJWT(Member member){
         long now = (new Date()).getTime();
 
         String subject = member.getEmail();
         String accessToken = jwtUtil.createJwt("access", member.getRole().toString(), subject, ACCESS_TOKEN_EXPIRE_TIME);
         String refreshToken = jwtUtil.createJwt("refresh", member.getRole().toString(), subject, REFRESH_TOKEN_EXPIRE_TIME);
         redisService.setValues(subject, refreshToken, REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
-        return LoginResponseDTO.of(accessToken, refreshToken, member.getTutorial(), member.getRole().toString());
+        return TokenResponseDTO.of(accessToken, refreshToken, member.getTutorial(), member.getRole().toString());
     }
     public TokenResponseDTO reissue(String refreshToken){
         String category = jwtUtil.getCategory(refreshToken);
@@ -43,14 +44,10 @@ public class JWTProvider {
         if(valueToken == null || !valueToken.equals(refreshToken) || !jwtUtil.getCategory(valueToken).equals("refresh")){
             throw new BadRequestException(IS_NOT_REFRESHTOKEN);
         }
-        String role = jwtUtil.getRole(refreshToken);
-        String newAT = jwtUtil.createJwt("access", role, subject, ACCESS_TOKEN_EXPIRE_TIME);
-        String newRT = jwtUtil.createJwt("refresh", role, subject, REFRESH_TOKEN_EXPIRE_TIME);
-
-        redisService.setValues(subject, newRT, REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
-        return new TokenResponseDTO(newAT, newRT);
+        Member member = memberService.findMemberByEmail(subject);
+        return createJWT(member);
     }
-    public LoginResponseDTO signup(Member member){
+    public TokenResponseDTO signup(Member member){
 
         String refreshToken = redisService.getValues(member.getEmail());
 
@@ -61,7 +58,7 @@ public class JWTProvider {
         log.info("original refresh token : "+redisService.getValues(subject));
         redisService.setValues(subject, newRT, REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
         log.info("new refresh token : "+redisService.getValues(subject));
-        return new LoginResponseDTO(newAT, newRT, member.getTutorial(), role);
+        return new TokenResponseDTO(newAT, newRT, member.getTutorial(), role);
     }
 
     public void deleteToken(String subject){

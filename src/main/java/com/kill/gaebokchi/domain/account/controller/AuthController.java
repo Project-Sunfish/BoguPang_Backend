@@ -3,7 +3,6 @@ package com.kill.gaebokchi.domain.account.controller;
 import com.kill.gaebokchi.domain.account.dto.request.LoginRequestDTO;
 import com.kill.gaebokchi.domain.account.dto.request.ReissueRequestDTO;
 import com.kill.gaebokchi.domain.account.dto.request.SignUpRequestDTO;
-import com.kill.gaebokchi.domain.account.dto.response.LoginResponseDTO;
 import com.kill.gaebokchi.domain.account.dto.response.TokenResponseDTO;
 import com.kill.gaebokchi.domain.account.entity.Member;
 import com.kill.gaebokchi.domain.account.security.CustomUserDetails;
@@ -15,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +27,7 @@ public class AuthController {
     private final MemberService memberService;
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO){
-        LoginResponseDTO response = authService.login(loginRequestDTO);
+        TokenResponseDTO response = authService.login(loginRequestDTO);
         return ResponseEntity.ok(response);
     }
 
@@ -37,7 +35,7 @@ public class AuthController {
     public ResponseEntity<?> signup(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody SignUpRequestDTO signUpRequestDTO){
         String email = customUserDetails.getUsername();
         Member member = memberService.findMemberByEmail(email);
-        LoginResponseDTO response = authService.signUp(member, signUpRequestDTO);
+        TokenResponseDTO response = authService.signUp(member, signUpRequestDTO);
         return ResponseEntity.ok(response);
     }
 
