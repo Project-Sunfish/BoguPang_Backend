@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Table(name="evolved_bogu")
-public class EvolvedBogu extends BaseTime implements Serializable {
+public class EvolvedBogu extends BaseTime {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="evolved_bogu_id")
     private Long id;

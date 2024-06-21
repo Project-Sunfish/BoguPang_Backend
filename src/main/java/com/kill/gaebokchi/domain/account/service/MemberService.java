@@ -47,7 +47,6 @@ public class MemberService {
         member.setBirth(request.getBirth());
     }
     @Transactional
-    @CacheEvict(value={"member", "evolvedBogu"})
     public void deleteMember(Member member){
         List<EvolvedBogu> evolvedBoguList = evolvedBoguRepository.findByHost(member);
         for(EvolvedBogu evolvedBogu : evolvedBoguList){

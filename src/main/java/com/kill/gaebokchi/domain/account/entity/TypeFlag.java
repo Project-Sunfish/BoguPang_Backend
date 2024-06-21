@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Table(name="type_flag")
-public class TypeFlag implements Serializable {
+public class TypeFlag{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="type_flag_id")

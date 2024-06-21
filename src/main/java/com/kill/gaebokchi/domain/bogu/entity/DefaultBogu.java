@@ -14,7 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 @Table(name="default_bogu")
-public class DefaultBogu extends BaseTime implements Serializable {
+public class DefaultBogu extends BaseTime {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="default_bogu_id")
     private Long id;
