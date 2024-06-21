@@ -12,6 +12,7 @@ import com.kill.gaebokchi.domain.bogu.service.DefaultBoguService;
 import com.kill.gaebokchi.global.error.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,6 +47,7 @@ public class MemberService {
         member.setBirth(request.getBirth());
     }
     @Transactional
+    @CacheEvict(value={"member", "evolvedBogu"})
     public void deleteMember(Member member){
         List<EvolvedBogu> evolvedBoguList = evolvedBoguRepository.findByHost(member);
         for(EvolvedBogu evolvedBogu : evolvedBoguList){

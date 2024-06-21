@@ -8,12 +8,14 @@ import com.kill.gaebokchi.domain.account.repository.MemberRepository;
 import com.kill.gaebokchi.global.error.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,9 +56,11 @@ public class DefaultBoguService {
         return defaultBoguRepository.findByHostAndId(member, id)
                 .orElseThrow(() -> new BadRequestException(NOT_FOUND_DEFAULT_BOGU_ID));
     }
-
     public List<DefaultBoguResponseDTO> findDefaultBoguByHostAndNotEvolve(Member member){
         List<DefaultBogu> findLists = defaultBoguRepository.findByHostAndEvolvedFormNull(member);
+        if(findLists==null){
+            return Collections.emptyList();
+        }
         return findLists.stream()
                 .map(DefaultBoguResponseDTO::from)
                 .collect(Collectors.toList());

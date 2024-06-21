@@ -4,6 +4,7 @@ import com.kill.gaebokchi.domain.bogu.entity.Category;
 import com.kill.gaebokchi.domain.bogu.entity.EvolvedBogu;
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EvolvedBoguResponseDTO {
+public class EvolvedBoguResponseDTO implements Serializable {
     private Long id;
     private LocalDateTime createdAt;
     private Boolean isLiberated;

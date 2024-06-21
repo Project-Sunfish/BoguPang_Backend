@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @EnableJpaAuditing
 @SpringBootApplication
-@EnableCaching
 public class GaebokchiApplication {
 
 	public static void main(String[] args) {

@@ -3,6 +3,7 @@ package com.kill.gaebokchi.domain.account.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -12,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Table(name="type_flag")
-public class TypeFlag {
+public class TypeFlag implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="type_flag_id")

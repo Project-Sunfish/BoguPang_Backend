@@ -4,6 +4,7 @@ import com.kill.gaebokchi.global.entity.BaseTime;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Table(name="evolved_bogu")
-public class EvolvedBogu extends BaseTime {
+public class EvolvedBogu extends BaseTime implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="evolved_bogu_id")
     private Long id;

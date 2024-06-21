@@ -63,6 +63,7 @@ public class BoguController {
     }
     @GetMapping("/bogu")
     public ResponseEntity<?> getBoguList(@AuthenticationPrincipal CustomUserDetails customUserDetails){
+        log.info("==>/api/bogu");
         String email = customUserDetails.getUsername();
         Member member = memberService.findMemberByEmail(email);
 

@@ -5,6 +5,8 @@ import com.kill.gaebokchi.global.entity.BaseTime;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Entity
 @Setter
 @Getter
@@ -12,7 +14,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Table(name="default_bogu")
-public class DefaultBogu extends BaseTime {
+public class DefaultBogu extends BaseTime implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="default_bogu_id")
     private Long id;

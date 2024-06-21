@@ -4,6 +4,7 @@ import com.kill.gaebokchi.domain.bogu.entity.Category;
 import com.kill.gaebokchi.domain.bogu.entity.EvolvedBogu;
 import com.kill.gaebokchi.domain.bogu.entity.Type;
 import com.kill.gaebokchi.domain.account.entity.Member;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -35,6 +36,7 @@ public interface EvolvedBoguRepository extends JpaRepository<EvolvedBogu, Long> 
             @Param("selectedCategory") Category selectedCategory,
             @Param("createdAt") LocalDateTime createdAt);
     @Query("SELECT eb FROM EvolvedBogu eb WHERE eb.defaultForm.host = :member AND eb.count >= 1")
+    @Cacheable(value="evolvedBogu")
     List<EvolvedBogu> findByHostAndNonZeroCount(@Param("member") Member member);
 
     @Query("SELECT eb FROM EvolvedBogu eb WHERE eb.defaultForm.host = :member AND eb.isLiberated = false")
