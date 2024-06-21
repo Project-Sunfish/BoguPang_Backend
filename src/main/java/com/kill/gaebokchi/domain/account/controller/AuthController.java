@@ -11,15 +11,19 @@ import com.kill.gaebokchi.domain.account.service.AuthService;
 import com.kill.gaebokchi.domain.account.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @Slf4j
 @RequiredArgsConstructor
+@RequestMapping("/admin")
 public class AuthController {
     private final AuthService authService;
     private final MemberService memberService;
@@ -41,5 +45,16 @@ public class AuthController {
     public ResponseEntity<?> reissue(@RequestBody ReissueRequestDTO reissueRequestDTO){
         TokenResponseDTO response = authService.reissue(reissueRequestDTO);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@AuthenticationPrincipal CustomUserDetails customUserDetails){
+        String email = customUserDetails.getUsername();
+        try{
+            authService.logout(email);
+            return ResponseEntity.ok("해당 유저가 성공적으로 로그아웃되었습니다.");
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 }

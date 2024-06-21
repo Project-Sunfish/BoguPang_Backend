@@ -2,6 +2,7 @@ package com.kill.gaebokchi.domain.account.service;
 
 import com.kill.gaebokchi.domain.account.dto.request.SignUpRequestDTO;
 import com.kill.gaebokchi.domain.account.entity.Member;
+import com.kill.gaebokchi.domain.account.entity.Role;
 import com.kill.gaebokchi.domain.account.repository.MemberRepository;
 import com.kill.gaebokchi.global.error.BadRequestException;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,9 @@ public class MemberService {
     public void updateMember(Member member, SignUpRequestDTO request){
         if(request.hasNullFields()){
             throw new BadRequestException(INVALID_SIGNUP_FORM);
+        }
+        if(member.getRole()== Role.ROLE_GUEST){
+            throw new BadRequestException(USER_ROLE_GUEST);
         }
         member.setName(request.getName());
         member.setGender(request.getGender());

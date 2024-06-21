@@ -1,5 +1,6 @@
 package com.kill.gaebokchi.domain.account.jwt;
 
+import com.kill.gaebokchi.global.redis.RedisService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,12 +21,17 @@ import static com.kill.gaebokchi.global.error.ExceptionCode.IS_NOT_ACCESSTOKEN;
 @Slf4j
 public class JWTFilter extends OncePerRequestFilter {
     private final JWTUtil jwtUtil;
+    private final RedisService redisService;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String accessToken = jwtUtil.resolveToken(request);
         if(StringUtils.hasText(accessToken) && jwtUtil.validate(accessToken)){
-            Authentication authentication = jwtUtil.getAuthentication(accessToken);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String subject = jwtUtil.getSubject(accessToken);
+            String storedToken = redisService.getValues(subject);
+            if(storedToken!=null && redisService.hasKey(subject)){
+                Authentication authentication = jwtUtil.getAuthentication(accessToken);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         }
         filterChain.doFilter(request, response);
     }

@@ -87,4 +87,9 @@ public class AuthService {
         return jwtProvider.reissue(request.getRefreshToken());
     }
 
+    @Transactional
+    public void logout(String email){
+        jwtProvider.deleteToken(email);
+    }
+
 }
