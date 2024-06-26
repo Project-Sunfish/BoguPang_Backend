@@ -31,7 +31,7 @@ public class JWTProvider {
         String accessToken = jwtUtil.createJwt("access", member.getRole().toString(), subject, ACCESS_TOKEN_EXPIRE_TIME);
         String refreshToken = jwtUtil.createJwt("refresh", member.getRole().toString(), subject, REFRESH_TOKEN_EXPIRE_TIME);
         redisService.setValues(subject, refreshToken, REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
-        return TokenResponseDTO.of(accessToken, refreshToken, member.getTutorial(), member.getRole().toString());
+        return TokenResponseDTO.of(accessToken, refreshToken, member.getRole().toString());
     }
     public TokenResponseDTO reissue(String refreshToken){
         String category = jwtUtil.getCategory(refreshToken);
@@ -58,7 +58,7 @@ public class JWTProvider {
         log.info("original refresh token : "+redisService.getValues(subject));
         redisService.setValues(subject, newRT, REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
         log.info("new refresh token : "+redisService.getValues(subject));
-        return new TokenResponseDTO(newAT, newRT, member.getTutorial(), role);
+        return new TokenResponseDTO(newAT, newRT, role);
     }
 
     public void deleteToken(String subject){

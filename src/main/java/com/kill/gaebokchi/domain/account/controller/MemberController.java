@@ -2,6 +2,7 @@ package com.kill.gaebokchi.domain.account.controller;
 
 import com.kill.gaebokchi.domain.account.dto.response.MemberResponseDTO;
 import com.kill.gaebokchi.domain.account.dto.request.SignUpRequestDTO;
+import com.kill.gaebokchi.domain.account.dto.response.TutorialResponseDTO;
 import com.kill.gaebokchi.domain.account.entity.Member;
 import com.kill.gaebokchi.domain.account.security.CustomUserDetails;
 import com.kill.gaebokchi.domain.account.service.MemberService;
@@ -49,7 +50,13 @@ public class MemberController {
         }
 
     }
-
+    @GetMapping("/tutorial")
+    public ResponseEntity<?> getTutorialFlag(@AuthenticationPrincipal CustomUserDetails customUserDetails){
+        String email = customUserDetails.getUsername();
+        Member member = memberService.findMemberByEmail(email);
+        TutorialResponseDTO response = memberService.getTutorialFlag(member);
+        return ResponseEntity.ok(response);
+    }
     @PostMapping("/tutorial")
     public ResponseEntity<?> makeTrueTutorialFlag(@AuthenticationPrincipal CustomUserDetails customUserDetails){
         String email = customUserDetails.getUsername();

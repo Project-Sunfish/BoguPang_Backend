@@ -1,6 +1,7 @@
 package com.kill.gaebokchi.domain.account.service;
 
 import com.kill.gaebokchi.domain.account.dto.request.SignUpRequestDTO;
+import com.kill.gaebokchi.domain.account.dto.response.TutorialResponseDTO;
 import com.kill.gaebokchi.domain.account.entity.Member;
 import com.kill.gaebokchi.domain.account.entity.Role;
 import com.kill.gaebokchi.domain.account.repository.MemberRepository;
@@ -66,5 +67,9 @@ public class MemberService {
             throw new BadRequestException(ALREADY_COMPLETE_TUTORIAL);
         }
         member.setTutorial(true);
+    }
+
+    public TutorialResponseDTO getTutorialFlag(Member member){
+        return TutorialResponseDTO.from(member);
     }
 }
