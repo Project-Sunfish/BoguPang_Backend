@@ -5,6 +5,7 @@ import com.kill.gaebokchi.domain.account.dto.request.ReissueRequestDTO;
 import com.kill.gaebokchi.domain.account.dto.request.SignUpRequestDTO;
 import com.kill.gaebokchi.domain.account.dto.response.TokenResponseDTO;
 import com.kill.gaebokchi.domain.account.dto.response.OAuthResponse;
+import com.kill.gaebokchi.domain.account.infra.apple.AppleApiClient;
 import com.kill.gaebokchi.domain.account.infra.google.GoogleApiClient;
 import com.kill.gaebokchi.domain.account.infra.kakao.KakaoApiClient;
 import com.kill.gaebokchi.domain.account.infra.naver.NaverApiClient;
@@ -32,6 +33,7 @@ public class AuthService {
     private final KakaoApiClient kakaoApiClient;
     private final NaverApiClient naverApiClient;
     private final GoogleApiClient googleApiClient;
+    private final AppleApiClient appleApiClient;
     @Transactional
     public TokenResponseDTO login(LoginRequestDTO request){
         if(request.hasNullFields()){
@@ -45,6 +47,8 @@ public class AuthService {
             response = naverApiClient.requestOAuthInfo(request.getAccessToken());
         }else if(socialType.equalsIgnoreCase("Google")){
             response = googleApiClient.requestOAuthInfo(request.getAccessToken());
+        }else if(socialType.equalsIgnoreCase("Apple")){
+            response = appleApiClient.requestOAuthInfo(request.getAuthorizationCode());
         }else{
             throw new BadRequestException(INVALID_SOCIAL_TYPE);
         }

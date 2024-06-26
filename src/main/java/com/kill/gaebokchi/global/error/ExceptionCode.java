@@ -14,6 +14,7 @@ public enum ExceptionCode {
     INVALID_TOKEN_TYPE(0005, "토큰 형식은 BEARER 입니다."),
     IS_NOT_ACCESSTOKEN(0006, "액세스 토큰이 아닙니다."),
     IS_NOT_REFRESHTOKEN(0007, "리프레시 토큰이 아닙니다."),
+    APPLE_LOGIN_ERROR(8, "애플로그인 에러입니다."),
 
     INVALID_REQUEST(1000, "올바르지 않은 요청입니다."),
 
