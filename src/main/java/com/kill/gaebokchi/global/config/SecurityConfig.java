@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .formLogin((auth)->auth.disable())
                 .httpBasic((auth)->auth.disable())
                 .authorizeHttpRequests((auth)->auth
-                        .requestMatchers("/admin/login", "/admin/reissue").permitAll()
+                        .requestMatchers("/","/admin/login", "/admin/reissue").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement((session)->session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
