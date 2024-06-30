@@ -6,7 +6,6 @@ build/
 !**/src/test/**/build/
 
 #개인 환경 파일 제외
-/src/main/resources/application-oauth.yml
 /src/main/resources/static/AuthKey_59442T6DQX.p8
 
 ### STS ###
