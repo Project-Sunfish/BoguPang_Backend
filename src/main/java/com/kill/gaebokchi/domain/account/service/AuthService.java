@@ -5,6 +5,7 @@ import com.kill.gaebokchi.domain.account.dto.request.ReissueRequestDTO;
 import com.kill.gaebokchi.domain.account.dto.request.SignUpRequestDTO;
 import com.kill.gaebokchi.domain.account.dto.response.TokenResponseDTO;
 import com.kill.gaebokchi.domain.account.dto.response.OAuthResponse;
+import com.kill.gaebokchi.domain.account.infra.SocialType;
 import com.kill.gaebokchi.domain.account.infra.apple.AppleApiClient;
 import com.kill.gaebokchi.domain.account.infra.google.GoogleApiClient;
 import com.kill.gaebokchi.domain.account.infra.kakao.KakaoApiClient;
@@ -14,11 +15,13 @@ import com.kill.gaebokchi.domain.account.entity.Member;
 import com.kill.gaebokchi.domain.account.entity.Role;
 import com.kill.gaebokchi.domain.account.entity.TypeFlag;
 import com.kill.gaebokchi.domain.account.repository.MemberRepository;
+import com.kill.gaebokchi.global.error.AuthException;
 import com.kill.gaebokchi.global.error.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import static com.kill.gaebokchi.global.error.ExceptionCode.*;
 
@@ -48,7 +51,7 @@ public class AuthService {
         }else if(socialType.equalsIgnoreCase("Google")){
             response = googleApiClient.requestOAuthInfo(request.getAccessToken());
         }else if(socialType.equalsIgnoreCase("Apple")){
-            response = appleApiClient.requestOAuthInfo(request.getAuthorizationCode());
+            response = appleApiClient.requestOAuthInfo(request.getAccessToken());
         }else{
             throw new BadRequestException(INVALID_SOCIAL_TYPE);
         }
@@ -59,6 +62,7 @@ public class AuthService {
         return memberRepository.findByEmail(response.getEmail()).orElseGet(()->createMember(response));
     }
     private Member createMember(OAuthResponse response){
+        log.info("social type : {}", response.getSocialType());
         Member member = Member.builder()
                 .email(response.getEmail())
                 .role(Role.ROLE_GUEST)
@@ -67,6 +71,9 @@ public class AuthService {
                 .build();
         TypeFlag typeFlag = typeFlagService.createFlag();
         member.setFlag(typeFlag);
+        if(response.getSocialType()== SocialType.APPLE){//server에서 revoke해야 함, 이때 refresh token 필요
+            member.setRefreshToken(response.getRefreshToken());
+        }
         memberRepository.save(member);
         return member;
     }
@@ -76,7 +83,7 @@ public class AuthService {
             throw new BadRequestException(INVALID_SIGNUP_FORM);
         }
         if(member.getRole()==Role.ROLE_USER){
-            throw new BadRequestException(ALREADY_SIGNUP_MEMBER);
+            throw new AuthException(ALREADY_SIGNUP_MEMBER);
         }
         member.setBirthType(request.getBirthType());
         member.setBirth(request.getBirth());

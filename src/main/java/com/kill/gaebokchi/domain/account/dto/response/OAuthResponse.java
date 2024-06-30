@@ -11,4 +11,5 @@ import lombok.Getter;
 public class OAuthResponse {
     String email;
     SocialType socialType;
+    String refreshToken;
 }

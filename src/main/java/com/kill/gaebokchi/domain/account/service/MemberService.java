@@ -10,6 +10,7 @@ import com.kill.gaebokchi.domain.bogu.entity.EvolvedBogu;
 import com.kill.gaebokchi.domain.bogu.repository.DefaultBoguRepository;
 import com.kill.gaebokchi.domain.bogu.repository.EvolvedBoguRepository;
 import com.kill.gaebokchi.domain.bogu.service.DefaultBoguService;
+import com.kill.gaebokchi.global.error.AuthException;
 import com.kill.gaebokchi.global.error.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +41,7 @@ public class MemberService {
             throw new BadRequestException(INVALID_SIGNUP_FORM);
         }
         if(member.getRole()== Role.ROLE_GUEST){
-            throw new BadRequestException(USER_ROLE_GUEST);
+            throw new AuthException(USER_ROLE_GUEST);
         }
         member.setName(request.getName());
         member.setGender(request.getGender());
@@ -64,7 +65,7 @@ public class MemberService {
     @Transactional
     public void toggleTutorialFlag(Member member){
         if(member.getTutorial()){
-            throw new BadRequestException(ALREADY_COMPLETE_TUTORIAL);
+            throw new AuthException(ALREADY_COMPLETE_TUTORIAL);
         }
         member.setTutorial(true);
     }

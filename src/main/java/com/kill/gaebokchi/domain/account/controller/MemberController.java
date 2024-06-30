@@ -4,6 +4,8 @@ import com.kill.gaebokchi.domain.account.dto.response.MemberResponseDTO;
 import com.kill.gaebokchi.domain.account.dto.request.SignUpRequestDTO;
 import com.kill.gaebokchi.domain.account.dto.response.TutorialResponseDTO;
 import com.kill.gaebokchi.domain.account.entity.Member;
+import com.kill.gaebokchi.domain.account.infra.SocialType;
+import com.kill.gaebokchi.domain.account.infra.apple.AppleApiClient;
 import com.kill.gaebokchi.domain.account.security.CustomUserDetails;
 import com.kill.gaebokchi.domain.account.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -13,11 +15,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
 public class MemberController {
     private final MemberService memberService;
+    private final AppleApiClient appleApiClient;
 
     @GetMapping
     public ResponseEntity<?> findUser(@AuthenticationPrincipal CustomUserDetails customUserDetails){
@@ -39,9 +44,16 @@ public class MemberController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteUser(@AuthenticationPrincipal CustomUserDetails customUserDetails){
+    public ResponseEntity<?> deleteUser(@AuthenticationPrincipal CustomUserDetails customUserDetails) throws IOException {
         String email = customUserDetails.getUsername();
         Member member = memberService.findMemberByEmail(email);
+        if(member.getSocialType()== SocialType.APPLE){
+            try{
+                appleApiClient.revoke(member);
+            }catch(IOException e){
+                throw new IOException(e.getMessage());
+            }
+        }
         try{
             memberService.deleteMember(member);
             return ResponseEntity.ok("해당 user를 정상적으로 삭제했습니다.");

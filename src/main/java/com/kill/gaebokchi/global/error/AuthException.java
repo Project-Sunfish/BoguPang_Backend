@@ -1,16 +1,12 @@
 package com.kill.gaebokchi.global.error;
 
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
+import org.aspectj.apache.bcel.classfile.annotation.RuntimeInvisAnnos;
 
-@Getter
-@Slf4j
-public class BadRequestException extends RuntimeException {
-
+public class AuthException extends RuntimeException {
     private final int code;
     private final String message;
 
-    public BadRequestException(final ExceptionCode exceptionCode) {
+    public AuthException(final ExceptionCode exceptionCode) {
         this.code = exceptionCode.getCode();
         this.message = exceptionCode.getMessage();
     }
