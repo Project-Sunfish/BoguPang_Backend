@@ -52,18 +52,17 @@ public class BoguController {
         EvolvedBoguResponseDTO res = evolvedBoguService.saveEvolvedBogu(member, evolutionRequestDTO);
         return ResponseEntity.ok(res);
     }
-    @GetMapping("/bogu/{evolvedBoguId}")
-    public ResponseEntity<?> getEvolvedBoguById(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable("evolvedBoguId") Long id){
+    @PostMapping("/bogu/id")
+    public ResponseEntity<?> getEvolvedBoguById(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody IdRequestDTO idRequestDTO){
         String email = customUserDetails.getUsername();
         Member member = memberService.findMemberByEmail(email);
 
-        EvolvedBoguResponseDTO res = evolvedBoguService.findEvolvedBoguByID(member, id);
+        EvolvedBoguResponseDTO res = evolvedBoguService.findEvolvedBoguByID(member, idRequestDTO.getId());
         return ResponseEntity.ok(res);
 
     }
     @GetMapping("/bogu")
     public ResponseEntity<?> getBoguList(@AuthenticationPrincipal CustomUserDetails customUserDetails){
-        log.info("==>/api/bogu");
         String email = customUserDetails.getUsername();
         Member member = memberService.findMemberByEmail(email);
 
@@ -100,7 +99,7 @@ public class BoguController {
 
     }
 
-    @GetMapping("/collection")
+    @PostMapping("/collection")
     public ResponseEntity<?> getDogamBoguList(@AuthenticationPrincipal CustomUserDetails customUserDetails){
         String email = customUserDetails.getUsername();
         Member member = memberService.findMemberByEmail(email);
@@ -109,12 +108,12 @@ public class BoguController {
         return ResponseEntity.ok(res);
     }
 
-    @GetMapping("/collection/{typeId}")
-    public ResponseEntity<?> getDogamBoguById(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable("typeId") Integer id){
+    @PostMapping("/collection/id")
+    public ResponseEntity<?> getDogamBoguById(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody IdRequestDTO idRequestDTO){
         String email = customUserDetails.getUsername();
         Member member = memberService.findMemberByEmail(email);
 
-        List<DetailDogamBoguResponseDTO> res = evolvedBoguService.findDogamBoguById(member, id);
+        List<DetailDogamBoguResponseDTO> res = evolvedBoguService.findDogamBoguById(member,idRequestDTO.getId().intValue());
         return ResponseEntity.ok(res);
 
     }

@@ -3,6 +3,8 @@ package com.kill.gaebokchi.domain.account.jwt;
 import com.kill.gaebokchi.domain.account.dto.response.TokenResponseDTO;
 import com.kill.gaebokchi.domain.account.entity.Member;
 import com.kill.gaebokchi.domain.account.service.MemberService;
+import com.kill.gaebokchi.domain.archive.LoginTime;
+import com.kill.gaebokchi.domain.archive.LoginTimeRepository;
 import com.kill.gaebokchi.global.error.BadRequestException;
 //import com.kill.gaebokchi.global.redis.RedisService;
 import com.kill.gaebokchi.global.redis.RedisService;
@@ -10,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -22,6 +25,7 @@ public class JWTProvider {
     private final JWTUtil jwtUtil;
     private final MemberService memberService;
     private final RedisService redisService;
+    private final LoginTimeRepository loginTimeRepository;
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;            // 30분
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  // 7일
     public TokenResponseDTO createJWT(Member member){
@@ -45,6 +49,13 @@ public class JWTProvider {
             throw new BadRequestException(IS_NOT_REFRESHTOKEN);
         }
         Member member = memberService.findMemberByEmail(subject);
+        //archive
+        LoginTime loginTime = LoginTime.builder()
+                .memberId(member.getId())
+                .loginAt(LocalDateTime.now())
+                .build();
+        loginTimeRepository.save(loginTime);
+        //archive
         return createJWT(member);
     }
     public TokenResponseDTO signup(Member member){

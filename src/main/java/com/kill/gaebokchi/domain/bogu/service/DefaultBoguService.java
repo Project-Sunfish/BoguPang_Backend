@@ -36,8 +36,9 @@ public class DefaultBoguService {
         if(defaultBoguRepository.countByMemberAndCreatedAtToday(member, startOfDay, endOfDay)>=3){
             throw new BadRequestException(EXCEED_DEFAULT_BOGU_CAPACITY);
         }
-        DefaultBogu entity = new DefaultBogu();
-        entity.setEvolvedForm(null);
+        DefaultBogu entity = DefaultBogu.builder()
+                            .evolvedForm(null)
+                            .build();
         member.addBogus(entity);
 
         memberRepository.save(member);

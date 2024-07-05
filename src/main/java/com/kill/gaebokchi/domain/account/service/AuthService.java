@@ -15,6 +15,8 @@ import com.kill.gaebokchi.domain.account.entity.Member;
 import com.kill.gaebokchi.domain.account.entity.Role;
 import com.kill.gaebokchi.domain.account.entity.TypeFlag;
 import com.kill.gaebokchi.domain.account.repository.MemberRepository;
+import com.kill.gaebokchi.domain.archive.LoginTime;
+import com.kill.gaebokchi.domain.archive.LoginTimeRepository;
 import com.kill.gaebokchi.global.error.AuthException;
 import com.kill.gaebokchi.global.error.BadRequestException;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
+import java.time.LocalDateTime;
 
 import static com.kill.gaebokchi.global.error.ExceptionCode.*;
 
@@ -32,6 +36,7 @@ import static com.kill.gaebokchi.global.error.ExceptionCode.*;
 public class AuthService {
     private final TypeFlagService typeFlagService;
     private final MemberRepository memberRepository;
+    private final LoginTimeRepository loginTimeRepository;
     private final JWTProvider jwtProvider;
     private final KakaoApiClient kakaoApiClient;
     private final NaverApiClient naverApiClient;
@@ -56,6 +61,13 @@ public class AuthService {
             throw new BadRequestException(INVALID_SOCIAL_TYPE);
         }
         Member findOne = findOrCreateMember(response);
+        //archive
+        LoginTime loginTime = LoginTime.builder()
+                .memberId(findOne.getId())
+                .loginAt(LocalDateTime.now())
+                .build();
+        loginTimeRepository.save(loginTime);
+        //archive
         return jwtProvider.createJWT(findOne);
     }
     private Member findOrCreateMember(OAuthResponse response){

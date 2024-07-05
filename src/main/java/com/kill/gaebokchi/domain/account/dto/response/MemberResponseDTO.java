@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 public class MemberResponseDTO {
+    private Long id;
     private SocialType socialType;
     private String name;
     private String birthType;
@@ -23,6 +24,7 @@ public class MemberResponseDTO {
     public static MemberResponseDTO from(Member entity){
 
         return MemberResponseDTO.builder()
+                .id(entity.getId())
                 .socialType(entity.getSocialType())
                 .name(entity.getName())
                 .birthType(entity.getBirthType())
